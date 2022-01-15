@@ -14,6 +14,23 @@ using std::cout, std::endl, std::string;
 
 class value{
 
+    private:
+    /*
+    OLA TA CHAINS
+    */
+
+    public:
+
+    /*
+    OLA TA FUNCTIONS
+    */
+
+   
+    /*
+    OLA TA OVERLOADED OPERATORS
+    */
+
+
 /* pair myarr[100]
  
     let o1 = object

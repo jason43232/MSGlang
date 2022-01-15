@@ -13,7 +13,9 @@ private:
 
 public:
 
-    //empty constructor
+    /*
+    empty constructor
+    */
     mslangPair(): key(), val(){};
 
     /*
@@ -22,19 +24,33 @@ public:
             key("test") = none,
         ]
     */
-    mslangPair(string key): key(key), val(){}
+    mslangPair(string key): key(key), val(){};
 
-    //
+    /*
+        full arguments constructor
+    */
+   mslangPair(string key, value val): key(key),val(val){};
+
+
+
+    // Desturactoro...
     ~mslangPair(){};
 
     string getKey(){
         return this->key;
     }
 
-    value getValue(){
+    value& getValue(){
         return this->val;
     }
 
+    mslangPair& operator= (value val){
+        this->val = val;
+        return *this;
+    }
 
-
+    // mslangPair& operator= (std::vector<mslangPair> list){
+    //     this->val = list;
+    //     return *this;
+    // }
 };
