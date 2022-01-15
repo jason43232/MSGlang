@@ -1,6 +1,6 @@
-#include "mslangObject.h"
+
 #include "mslangPair.h"
 
 #define let auto
-#define object new object
+#define object new std::vector<mslangPair>
 #define none __null

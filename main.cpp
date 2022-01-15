@@ -61,14 +61,15 @@ int main()
     // test.addPair("works", "yes");
 
     let o1 = object;
-    int * test = none;
-
-    o1->addPair("id1", "value1");
-
-    auto it = o1->getPairs()->begin();
-    string pClass1 = it->first;
-    string pClass2 = it->second;
-    cout<< pClass1 << " : " << pClass2 <<endl;
-
+    
+    // let o2 = object [
+    //     key("pls") = "work"
+    // ]
+    content val;
+    let pair1 = new mslangPair("Test",val);
+    o1->push_back(*pair1);
+    
+    auto it = o1->begin();
+    cout<< it->getKey()<< " : "<< it->getValue().isAlive()<<endl; 
     return 0;
 }

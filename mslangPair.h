@@ -5,11 +5,10 @@
 using std::cout, std::endl, std::string;
 
 class mslangPair{
-// overload =
 
 private:
     string key;
-    value val;
+    content val;
 
 public:
 
@@ -29,7 +28,7 @@ public:
     /*
         full arguments constructor
     */
-   mslangPair(string key, value val): key(key),val(val){};
+   mslangPair(string key, content val): key(key),val(val){};
 
 
 
@@ -40,11 +39,11 @@ public:
         return this->key;
     }
 
-    value& getValue(){
+    content& getValue(){
         return this->val;
     }
 
-    mslangPair& operator= (value val){
+    mslangPair& operator= (content val){
         this->val = val;
         return *this;
     }

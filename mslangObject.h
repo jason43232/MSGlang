@@ -12,7 +12,7 @@
 #include <vector>
 using std::cout, std::endl, std::string;
 
-class value{
+class content{
 
     private:
     /*
@@ -20,12 +20,17 @@ class value{
     */
 
     public:
+    content(){};
+    ~content(){};
 
+    string isAlive(){
+        return "yes";
+    }
     /*
     OLA TA FUNCTIONS
     */
 
-   
+
     /*
     OLA TA OVERLOADED OPERATORS
     */
