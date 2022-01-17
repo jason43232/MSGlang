@@ -11,61 +11,88 @@
 #include <iterator>
 #include <vector>
 using std::cout, std::endl, std::string;
+class mslangPair;
 
-class content{
-
+template <typename T>
+class mslangObj{
     private:
-    /*
-    OLA TA CHAINS
-    */
-
+    T value;
+    
     public:
-    content(){};
-    ~content(){};
+    mslangObj():value(NULL){};
+    mslangObj(T v):value(v){};
+    ~mslangObj(){};
 
-    string isAlive(){
-        return "yes";
+
+    T getValue(){
+            return this->value;
+}
+
+
+    mslangObj operator[] (std::vector<mslangPair> v){
+        this->value = v;
+        return *this;
     }
-    /*
-    OLA TA FUNCTIONS
-    */
+    // mslangObj& operator[] (mslangPair v){
+    //     this->value = v;
+    //     return *this;
+    // }
 
-
-    /*
-    OLA TA OVERLOADED OPERATORS
-    */
-
-
-/* pair myarr[100]
- 
-    let o1 = object
-    Vector<pairs<key,value> > 
-    
-    [
-
-
-    ]
-
-    values 1, "2", true, "tsapu"];
-    
-    object& operator[] (mslangPair::mslangPair()){
-        
-    }
-    let name2 = object[ values val1, val2, val3... ];
-
-    
-
-    let name2 = object[
-        key("0") = val1,
-        key("1") = val2,
-        key("2") = val3
-    ]
- let myarr = pair [
-    key(id) = object,
-    key(id) = object,
-    func(func_name) { func_body},
-     
-    ]
-
-*/
 };
+
+
+
+class mslangPair{
+
+private:
+    string key;
+    mslangObj<string> cont;
+
+public:
+
+    /*
+    empty constructor
+    */
+    mslangPair(): key(), cont(){};
+
+    /*
+    *empty object contructor
+        e.g. let o1 = object [
+            key("test") = none,
+        ]
+    */
+    mslangPair(string key): key(key), cont(){};
+
+    /*
+        full arguments constructor
+    */
+   mslangPair(string key, mslangObj<string> val): key(key),cont(val){};
+
+
+
+    // Desturactoro...
+    ~mslangPair(){};
+
+    string getKey(){
+        return this->key;
+    }
+
+    mslangObj<string>& getContent(){
+        return this->cont;
+    }
+
+    mslangPair& operator= (string val){
+        this->cont = val;
+        return *this;
+    }
+
+    
+
+    // mslangPair& operator= (std::vector<mslangPair> list){
+    //     this->val = list;
+    //     return *this;
+    // }
+};
+
+
+
