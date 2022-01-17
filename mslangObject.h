@@ -13,30 +13,34 @@
 using std::cout, std::endl, std::string;
 class mslangPair;
 
-template <typename T>
+
 class mslangObj{
     private:
-    T value;
+    std::any value;
+    std::vector<mslangPair> list;
     
     public:
     mslangObj():value(NULL){};
-    mslangObj(T v):value(v){};
+    mslangObj(std::any v):value(v),list(NULL){};
+    mslangObj(std::vector<mslangPair> l): value(0),list(l){}
     ~mslangObj(){};
 
 
-    T getValue(){
+    std::any getValue(){
             return this->value;
 }
 
+    std::vector<mslangPair> getList(){
 
-    mslangObj operator[] (std::vector<mslangPair> v){
-        this->value = v;
-        return *this;
+        return this->list;
     }
-    // mslangObj& operator[] (mslangPair v){
-    //     this->value = v;
-    //     return *this;
-    // }
+
+
+    mslangObj& operator[] (std::vector<mslangPair> v){
+        this->list = v;
+        return this;
+    }
+    
 
 };
 
@@ -46,14 +50,14 @@ class mslangPair{
 
 private:
     string key;
-    mslangObj<string> cont;
+    mslangObj value;
 
 public:
 
     /*
     empty constructor
     */
-    mslangPair(): key(), cont(){};
+    mslangPair(): key(), value(){};
 
     /*
     *empty object contructor
@@ -61,12 +65,12 @@ public:
             key("test") = none,
         ]
     */
-    mslangPair(string key): key(key), cont(){};
+    mslangPair(string key): key(key), value(){};
 
     /*
         full arguments constructor
     */
-   mslangPair(string key, mslangObj<string> val): key(key),cont(val){};
+   mslangPair(string key, mslangObj val): key(key),value(val){};
 
 
 
@@ -77,12 +81,12 @@ public:
         return this->key;
     }
 
-    mslangObj<string>& getContent(){
-        return this->cont;
+    mslangObj& getValue(){
+        return this->value;
     }
 
     mslangPair& operator= (string val){
-        this->cont = val;
+        this->value = val;
         return *this;
     }
 
