@@ -98,7 +98,26 @@ class wrapper {
      cout << this->obj_vector.at(2).getValue().index() << endl;
      cout << this->obj_vector.at(3).getValue().index() << endl;
     };
+
+    wrapper(object o){
+
+    };
     ~wrapper(){};
+
+
+    wrapper& operator[](object o){
+        /*
+            Recognize every object inside the []
+            and push back every object in the vector
+        
+        */
+       this->obj_vector.push_back(o);
+
+    };
+
+    wrapper& operator, (object o){
+        
+    };
     
 };
 
