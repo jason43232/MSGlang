@@ -8,4 +8,5 @@
  #define func(x) Object(x) = []()
  #define lambda []()
  #define values Object(),
+ #define input(x) helpers::getInput(x)
 

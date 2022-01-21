@@ -14,7 +14,6 @@
 #include <vector>
 #include <variant>
 using std::cout, std::endl, std::string, std::vector;
-
 class Object;
 class wrapper;
     
@@ -178,6 +177,8 @@ public:
          
          return *this;
     }   
+    
+   
 };
 
 
@@ -233,9 +234,53 @@ class wrapper : public Object{
             return *this;
     }
 
+        
     void print(){
          for(int i =0; i< this->getObjVector().size();i++){
-        cout<<"++++"<< this->getObjVector()[i].getID()<<endl;
+
+            switch(this->getObjVector()[i].getValue().index()){
+
+                case 0:
+                case 2:
+        cout<<this->getObjVector()[i].getID()<<" : "
+        << std::get<int>(this->getObjVector()[i].getValue())<<endl;
+                    break;
+
+
+                case 1 :
+                 cout<<this->getObjVector()[i].getID()<<" : "
+        << std::get<double>(this->getObjVector()[i].getValue())<<endl;
+                    break;
+            
+                case 3:
+                    cout<<this->getObjVector()[i].getID()<<" : "
+        << std::get<string>(this->getObjVector()[i].getValue())<<endl;
+                    break;
+                case 4:
+                 cout<<this->getObjVector()[i].getID()<<" : "
+        << " Object "<<endl;
+                    break;
+                case 5:
+                   cout<<this->getObjVector()[i].getID()<<" : "
+        << " Method "<<endl;
+                    break;
+                default:
+                    cout<<this->getObjVector()[i].getID()<<" : "
+                 << "NaN "<<endl;
+                    break;
+            }
         }
     }
 };
+
+namespace helpers{
+    void hello()
+{
+    cout << "hello"<<endl;
+}
+myType getInput(string s){
+        cout<< s;
+       myType in = std::cin.get();
+        return in;
+    };
+}

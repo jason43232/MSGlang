@@ -1,10 +1,4 @@
 #include "preprocDefs.h"
-
-void hello()
-{
-    cout << "hello"<<endl;
-}
-
 int main()
 {
     let i1 = object[
@@ -29,6 +23,7 @@ int main()
     key("9")= lambda{ cout<< "I am a lamda";}
     ];
 
+    i1["6"] = input("6:");
    i1.print();
 
   
