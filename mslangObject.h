@@ -16,6 +16,8 @@
 using std::cout, std::endl, std::string, std::vector;
 
 class Object;
+class wrapper;
+    
 typedef std::variant<
     int, 
     double,
@@ -25,8 +27,10 @@ typedef std::variant<
     std::function<void(void)> > 
     myType;
 
-class Object{
+class Object {
 private:
+
+    int arrayIndex=0;
     string id;
     vector<Object> list;
     myType value;
@@ -34,35 +38,42 @@ private:
 public:
 
     Object(){
-        cout<<"Default Object constructor called!"<<endl;
+        cout<<"\nDefault Object constructor called!"<<endl;
     };
     Object(string Id,int i){ 
         this->id = Id;
         this->value = i;
-   cout<< "this is an int Object:  " << this->id << " : "<<
+   cout<< "\nthis is an int Object:  " << this->id << " : "<<
    std::get<int>(this->value) <<endl;
     };
     Object(string Id){ 
          this->id = Id;
-        cout<<"ID only " << this->id << " : "<<endl;
+        cout<<"\nID only " << this->id << " : "<<endl;
+        
+    };
+    Object(string Id, myType t){ 
+         this->id = Id;
+         this->setValue(t);
+        cout<<"\nID only " << this->id << " : "<<endl;
         
     };
     Object(string Id,string s){ 
          this->id = Id;
         this->value=s;
-        cout<<"this is a string Object: " << this->id << " : "<< std::get<string>(this->value)<<endl;
+        cout<<"\nthis is a string Object: " << this->id << " : "<< std::get<string>(this->value)<<endl;
         
     };
     Object( Object *o){
         this->value=o;
-        cout<<"this is an Object: "<<endl;
+        cout<<"\nthis is an Object: "<<endl;
         
     };
-    Object(string Id,std::function<int(void)> f){
-         this->id = Id;
+    Object(string Id,std::function<void(void)> f){
+        this->id = Id;
         this->value=f;
-        cout << "This is a function malfunction: " <<endl;
-    }
+        cout << "\nThis is a function malfunction: " <<endl;
+    };
+
     ~Object(){};
 
     auto getValue(){
@@ -72,6 +83,7 @@ public:
     auto getID(){
         return this->id;
     }
+
     auto getList(){
         return this->list;
     }
@@ -85,26 +97,39 @@ public:
        cout<< "New id set for Object : "<< this->getID()<<endl;
     }
 
-    
+   int getArrayIndex(){
+        return this->arrayIndex;
+    }
 
-    Object& operator= (string v){
-        cout<< "INDEX:::"<< this->value.index()<<endl;
-        if(this->value.index()!= -1){
-            cout<< "Object found but already has value"<<endl;
-            /*
-            TODO: find a way to change type of value
-            */
+    void setArrayIndex(int x){
+        this->arrayIndex=x;
+    }
+    void setList(vector<Object> l){
+       this->list=l;
+       cout<< "FUUUUUUUUCK"<<endl;
+    }
+
+    Object& operator= (myType t){
+
+        this->setValue(t);
+        if(t.index()==3){
+            //string
+            cout<<"Value of: "<<this->id<< " updated to-->"<<std::get<string>(this->value) <<endl;
         }
+        else if(t.index()==4){
+            //object
+            cout<<"Value of: "<<this->id<< " updated to--> object"<<endl;
+        }
+        else if(t.index()==5){
+            cout<<"Value of: "<<this->id<< " updated to--> method"<<endl;
+        }
+        
         return *this;
     }
+
     Object& operator= (int value){
-         cout<<"Overloaded="<<endl;
          this->value=value;
          cout<<"Value of: "<<this->id<< " updated to--> "<<std::get<int>(this->value)<<endl;
-         return *this;
-    }
-    Object& operator= (Object* value){
-         this->value=value;
          return *this;
     }
     Object& operator= (double value){
@@ -112,26 +137,49 @@ public:
          cout<<"Value of: "<<this->id<< " updated to--> "<<std::get<double>(this->value)<<endl;
          return *this;
     }
+
+    // Object& operator= (string v){
+    //     if(this->value.index() != -1){
+    //         cout<< "Object found but already has value"<<endl;
+    //        Object temp = Object(this->getID(),v);
+    //        *this = temp;
+
+    //     }
+    //     return *this;
+    // }
+    // Object& operator= (Object* value){
+    //      this->value=value;
+    //      return *this;
+    // }
+    // Object& operator= (std::function<void(void)> f){
+    //      this->value= f;
+    //      return *this;
+    // }
     Object& operator= (long int value){
+        cout<< "-"<<endl;
          this->value= "NaN";
-         return *this;
-    }
-    Object& operator= (std::function<void(void)> f){
-         this->value= f;
          return *this;
     }
 
         Object& operator, (Object o){
-        cout<<"overloaded COMMA"<<endl;
+        cout<<" OPERATION: Object, Object"<<endl;
         if(this->list.size() == 0) list.push_back(*this);
          this->list.push_back(o); 
         return *this;
     }
-   
+
+        Object& operator, (myType val){
+        cout<<"OPERATION: Object, myType"<<endl;
+         Object newObj("0");
+         newObj = val;
+         this->list.push_back(newObj);
+         
+         return *this;
+    }   
 };
 
 
-class wrapper{
+class wrapper : public Object{
     private:
 
     vector<Object> obj_vector;
@@ -142,14 +190,14 @@ class wrapper{
     };
 
     wrapper(Object o){
-        cout<<"Wrapper constructor with Object args"<<endl;
+        cout<<"Wrapper constructor with Object args"<<endl<<endl;
     };
     ~wrapper(){};
 
     Object& find(string id){
 
         for (auto it = begin (this->obj_vector); it != end (this->obj_vector); ++it) {
-            // cout<< it->getID()<<endl;
+            
           if(it->getID() == id){
               return *it;
           }   
@@ -167,12 +215,19 @@ class wrapper{
      }
 
     wrapper& operator[](Object o){
-        cout<<"Overloaded[]"<<endl;
+        cout<<"wrapper[Object]"<<endl;
        this->obj_vector= o.getList() ;
          return *this;
     }
+
+ 
     Object& operator[](string objID){
-        cout<<"Find : "<< objID <<endl;
          return find(objID);
+    }
+
+    wrapper& operator, (Object o){
+            cout<< "OPERATION: Object, Wrapper"<<endl;
+            this->getList().insert(this->getList().end(),o.getList().begin(), o.getList().end());
+            return *this;
     }
 };
