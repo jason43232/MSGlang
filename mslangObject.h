@@ -16,6 +16,8 @@
 using std::cout, std::endl, std::string, std::vector;
 class Object;
 class wrapper;
+
+typedef std::variant<int, string, bool, double> myval;
     
 typedef std::variant<
     int, 
@@ -25,6 +27,8 @@ typedef std::variant<
     Object*,
     std::function<void(void)> > 
     myType;
+
+
 
 class Object {
 private:
@@ -113,14 +117,17 @@ public:
         this->setValue(t);
         if(t.index()==3){
             //string
+            cout<<"\n\n\t\tWOAH \n\n"<<endl;
             cout<<"Value of: "<<this->id<< " updated to-->"<<std::get<string>(this->value) <<endl;
         }
         else if(t.index()==4){
             //object
+            cout<<"\n\n\t\tYEEEE \n\n"<<endl;
             cout<<"Value of: "<<this->id<< " updated to--> object"<<endl;
         }
         else if(t.index()==5){
             //method
+            cout<<"\n\n\t\tJESUS \n\n"<<endl;
             cout<<"Value of: "<<this->id<< " updated to--> method"<<endl;
         }
         
@@ -138,23 +145,6 @@ public:
          return *this;
     }
 
-    // Object& operator= (string v){
-    //     if(this->value.index() != -1){
-    //         cout<< "Object found but already has value"<<endl;
-    //        Object temp = Object(this->getID(),v);
-    //        *this = temp;
-
-    //     }
-    //     return *this;
-    // }
-    // Object& operator= (Object* value){
-    //      this->value=value;
-    //      return *this;
-    // }
-    // Object& operator= (std::function<void(void)> f){
-    //      this->value= f;
-    //      return *this;
-    // }
     Object& operator= (long int value){
         cout<< "-"<<endl;
          this->value= "NaN";
@@ -241,7 +231,7 @@ class wrapper : public Object{
             switch(this->getObjVector()[i].getValue().index()){
 
                 case 0:
-                case 2:
+                
         cout<<this->getObjVector()[i].getID()<<" : "
         << std::get<int>(this->getObjVector()[i].getValue())<<endl;
                     break;
@@ -251,7 +241,10 @@ class wrapper : public Object{
                  cout<<this->getObjVector()[i].getID()<<" : "
         << std::get<double>(this->getObjVector()[i].getValue())<<endl;
                     break;
-            
+                case 2:      
+        cout<<this->getObjVector()[i].getID()<<" : "
+        << std::get<bool>(this->getObjVector()[i].getValue())<<endl;
+                break;
                 case 3:
                     cout<<this->getObjVector()[i].getID()<<" : "
         << std::get<string>(this->getObjVector()[i].getValue())<<endl;
@@ -273,6 +266,34 @@ class wrapper : public Object{
     }
 };
 
+
+std::istream& operator >>(std::istream& in, myType& v){
+        switch (v.index()){
+            case 0: 
+            int i;
+                in >> i;
+               v=i;
+                break;
+            case 1:
+            double d;
+            in>>d;
+            v=d;
+                break;
+        
+            case 2:
+               bool b;
+               in>>b;
+               v=b;  
+                break;
+            case 3:
+            string s;
+            in>>s;
+            v=s;    
+                break;
+        }
+    return in;
+    }
+
 namespace helpers{
     void hello()
 {
@@ -280,7 +301,9 @@ namespace helpers{
 }
 myType getInput(string s){
         cout<< s;
-       myType in = std::cin.get();
+       myType in;
+        std::cin >> in;
         return in;
-    };
+        }
+
 }

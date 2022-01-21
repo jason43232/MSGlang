@@ -6,7 +6,7 @@ int main()
     key("2")= 12,
     key("3")= none,
     key("4")= "3",
-    values 1,true,3.2,
+    values 3,true,3.2,
     key("6")= "3",
     key("7")= "3",
     object[
@@ -22,9 +22,11 @@ int main()
     func("8"){ cout<< "Hello!";},
     key("9")= lambda{ cout<< "I am a lamda";}
     ];
+   cout<<i1["6"].getValue().index()<<endl;
 
     i1["6"] = input("6:");
    i1.print();
+   cout<<i1["6"].getValue().index()<<endl;
 
   
    
