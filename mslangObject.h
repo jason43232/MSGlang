@@ -121,6 +121,7 @@ public:
             cout<<"Value of: "<<this->id<< " updated to--> object"<<endl;
         }
         else if(t.index()==5){
+            //method
             cout<<"Value of: "<<this->id<< " updated to--> method"<<endl;
         }
         
@@ -170,7 +171,8 @@ public:
 
         Object& operator, (myType val){
         cout<<"OPERATION: Object, myType"<<endl;
-         Object newObj("0");
+         Object newObj(std::to_string(arrayIndex));
+         this->arrayIndex++;
          newObj = val;
          this->list.push_back(newObj);
          
@@ -229,5 +231,11 @@ class wrapper : public Object{
             cout<< "OPERATION: Object, Wrapper"<<endl;
             this->getList().insert(this->getList().end(),o.getList().begin(), o.getList().end());
             return *this;
+    }
+
+    void print(){
+         for(int i =0; i< this->getObjVector().size();i++){
+        cout<<"++++"<< this->getObjVector()[i].getID()<<endl;
+        }
     }
 };
