@@ -60,6 +60,25 @@
     "utility": "cpp",
     "vector": "cpp",
     "__hash_table": "cpp",
-    "__split_buffer": "cpp"
+    "__split_buffer": "cpp",
+    "variant": "cpp",
+    "cmath": "cpp",
+    "compare": "cpp",
+    "complex": "cpp",
+    "concepts": "cpp",
+    "condition_variable": "cpp",
+    "deque": "cpp",
+    "numbers": "cpp",
+    "numeric": "cpp",
+    "queue": "cpp",
+    "random": "cpp",
+    "semaphore": "cpp",
+    "sstream": "cpp",
+    "thread": "cpp",
+    "typeindex": "cpp",
+    "*.tcc": "cpp",
+    "memory_resource": "cpp",
+    "stop_token": "cpp",
+    "cinttypes": "cpp"
   }
 }

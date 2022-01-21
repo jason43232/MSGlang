@@ -1,7 +1,3 @@
-//
-// Created by Ιάσονας Νταγιάννης on 14/1/22.
-//
-
 #ifndef MSLANG_Object_H
 #define MSLANG_Object_H
 #endif // MSLANG_Object_H
@@ -41,40 +37,33 @@ private:
 public:
 
     Object(){
-        cout<<"\nDefault Object constructor called!"<<endl;
     };
     Object(string Id,int i){ 
         this->id = Id;
         this->value = i;
-   cout<< "\nthis is an int Object:  " << this->id << " : "<<
-   std::get<int>(this->value) <<endl;
     };
     Object(string Id){ 
          this->id = Id;
-        cout<<"\nID only " << this->id << " : "<<endl;
+    
         
     };
     Object(string Id, myType t){ 
          this->id = Id;
          this->setValue(t);
-        cout<<"\nID only " << this->id << " : "<<endl;
-        
     };
+
     Object(string Id,string s){ 
          this->id = Id;
         this->value=s;
-        cout<<"\nthis is a string Object: " << this->id << " : "<< std::get<string>(this->value)<<endl;
-        
     };
+
     Object( Object *o){
         this->value=o;
-        cout<<"\nthis is an Object: "<<endl;
-        
     };
+
     Object(string Id,std::function<void(void)> f){
         this->id = Id;
         this->value=f;
-        cout << "\nThis is a function malfunction: " <<endl;
     };
 
     ~Object(){};
@@ -92,12 +81,10 @@ public:
     }
     void setValue(myType v){
         this->value = v;
-        cout<< "New value set for Object : "<< this->getID()<<endl;
     }
 
     void setID(string v){
        this->id=v;
-       cout<< "New id set for Object : "<< this->getID()<<endl;
     }
 
    int getArrayIndex(){
@@ -109,7 +96,6 @@ public:
     }
     void setList(vector<Object> l){
        this->list=l;
-       cout<< "FUUUUUUUUCK"<<endl;
     }
 
     Object& operator= (myType t){
@@ -117,18 +103,12 @@ public:
         this->setValue(t);
         if(t.index()==3){
             //string
-            cout<<"\n\n\t\tWOAH \n\n"<<endl;
-            cout<<"Value of: "<<this->id<< " updated to-->"<<std::get<string>(this->value) <<endl;
         }
         else if(t.index()==4){
             //object
-            cout<<"\n\n\t\tYEEEE \n\n"<<endl;
-            cout<<"Value of: "<<this->id<< " updated to--> object"<<endl;
         }
         else if(t.index()==5){
             //method
-            cout<<"\n\n\t\tJESUS \n\n"<<endl;
-            cout<<"Value of: "<<this->id<< " updated to--> method"<<endl;
         }
         
         return *this;
@@ -136,37 +116,31 @@ public:
 
     Object& operator= (int value){
          this->value=value;
-         cout<<"Value of: "<<this->id<< " updated to--> "<<std::get<int>(this->value)<<endl;
          return *this;
     }
     Object& operator= (double value){
          this->value=value;
-         cout<<"Value of: "<<this->id<< " updated to--> "<<std::get<double>(this->value)<<endl;
          return *this;
     }
 
     Object& operator= (long int value){
-        cout<< "-"<<endl;
          this->value= "NaN";
          return *this;
     }
 
         Object& operator, (Object o){
-        cout<<" OPERATION: Object, Object"<<endl;
         if(this->list.size() == 0) list.push_back(*this);
          this->list.push_back(o); 
         return *this;
     }
 
         Object& operator, (myType val){
-        cout<<"OPERATION: Object, myType"<<endl;
-         Object newObj(std::to_string(arrayIndex));
-         this->arrayIndex++;
-         newObj = val;
-         this->list.push_back(newObj);
-         
-         return *this;
-    }   
+            Object newObj(std::to_string(arrayIndex));
+            this->arrayIndex++;
+            newObj = val;
+            this->list.push_back(newObj);
+            return *this;
+        }   
     
    
 };
@@ -179,11 +153,11 @@ class wrapper : public Object{
 
     public:
     wrapper(){
-        cout<< " Im not even a wrapper though!" << endl;
+    
     };
 
     wrapper(Object o){
-        cout<<"Wrapper constructor with Object args"<<endl<<endl;
+   
     };
     ~wrapper(){};
 
@@ -208,7 +182,7 @@ class wrapper : public Object{
      }
 
     wrapper& operator[](Object o){
-        cout<<"wrapper[Object]"<<endl;
+       
        this->obj_vector= o.getList() ;
          return *this;
     }
@@ -219,50 +193,51 @@ class wrapper : public Object{
     }
 
     wrapper& operator, (Object o){
-            cout<< "OPERATION: Object, Wrapper"<<endl;
+        
             this->getList().insert(this->getList().end(),o.getList().begin(), o.getList().end());
             return *this;
     }
-
         
     void print(){
+        cout << "Object [";
          for(int i =0; i< this->getObjVector().size();i++){
-
             switch(this->getObjVector()[i].getValue().index()){
 
                 case 0:
                 
-        cout<<this->getObjVector()[i].getID()<<" : "
-        << std::get<int>(this->getObjVector()[i].getValue())<<endl;
+        cout<<"\""<<this->getObjVector()[i].getID()<<"\" : "
+        << std::get<int>(this->getObjVector()[i].getValue());
                     break;
 
 
                 case 1 :
-                 cout<<this->getObjVector()[i].getID()<<" : "
-        << std::get<double>(this->getObjVector()[i].getValue())<<endl;
+                 cout<<"\""<<this->getObjVector()[i].getID()<<"\" : "
+        << std::get<double>(this->getObjVector()[i].getValue());
                     break;
                 case 2:      
-        cout<<this->getObjVector()[i].getID()<<" : "
-        << std::get<bool>(this->getObjVector()[i].getValue())<<endl;
+       cout<<"\""<<this->getObjVector()[i].getID()<<"\" : "
+        << std::get<bool>(this->getObjVector()[i].getValue());
                 break;
                 case 3:
-                    cout<<this->getObjVector()[i].getID()<<" : "
-        << std::get<string>(this->getObjVector()[i].getValue())<<endl;
+                    cout<<"\""<<this->getObjVector()[i].getID()<<"\" : "
+        << std::get<string>(this->getObjVector()[i].getValue());
                     break;
                 case 4:
-                 cout<<this->getObjVector()[i].getID()<<" : "
-        << " Object "<<endl;
+                 cout<<"\""<<this->getObjVector()[i].getID()<<"\" : "
+        << " Object ";
                     break;
                 case 5:
-                   cout<<this->getObjVector()[i].getID()<<" : "
-        << " Method "<<endl;
+                   cout<<"\""<<this->getObjVector()[i].getID()<<"\" : "
+        << " Method ";
                     break;
                 default:
-                    cout<<this->getObjVector()[i].getID()<<" : "
-                 << "NaN "<<endl;
+                    cout<<"\""<<this->getObjVector()[i].getID()<<"\" : "
+                 << "NaN ";
                     break;
             }
+            cout<<", ";
         }
+        cout<<"]"<<endl;
     }
 };
 
