@@ -8,23 +8,37 @@ int add()
 
 int main()
 {
-    let i1 = object[key("Den htan")=12];
-    auto i1 = wrapper(object())[key("Den htan")=12];
+    let i1 = object[
+    key(1)=12,
+    key(2) = "XYNNN",
+    key(3)= none,
+    key(4)= "3",
+    key(5)= "3",
+    key(6)= "3",
+    key(7)= "3",
+    key(8)= &add
+    ];
+  
+  cout << ref(i1).getObjVector().size()<<endl;
 
-    wrapper(object()) EXPECTS(object) object("den htan") setValue 12
-    let i2 = object(object("key2","work") );
-    let i3 = object("key3",&add);
-    let i4 = object("overloaded")= "YEAAAHHA";
+   
+        for(int i =0; i< i1.getObjVector().size();i++){
+        cout<<"++++"<< i1.getObjVector()[i].getID()<<endl;
+        }
 
-    // let i5 = object[ values val1, val2, val3... ];
-    // values -->  val1, val2, val3 ]
+/*  
 
-     cout << std::get<string>(i4.getValue())<<endl;
+*/
 
 
-  //cout << std::get<string>(i2.getValue());
+   cout<< "index:" <<i1["1"].getValue().index()<<endl;
 
-    let w1 = wrapper {i1,i2,i3,i4};
+    i1["1"] = 13.2;
+   cout<< "index:" <<i1["1"].getValue().index()<<endl;
+    i1["1"] = "this is a string";
+   cout<< "value:" <<i1["1"].getValue().index()<<endl;
+   
+   cout<< "value:" <<std::get<string>( i1["1"].getValue())<<endl;
 
     return 0;
 }
